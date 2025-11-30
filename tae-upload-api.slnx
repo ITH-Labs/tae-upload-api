@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TAE.UploadService.Tests/TAE.UploadService.Tests.csproj" Id="0179cf2e-bab0-431d-a6bc-558e0ba53756" />
+  <Project Path="TAE.UploadService/TAE.UploadService.csproj" />
+</Solution>
