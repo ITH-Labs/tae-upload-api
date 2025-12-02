@@ -1,0 +1,20 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+      - feat/**
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  call-template:
+    uses: ITH-Labs/.github/.github/workflows/dotnet-build-and-deploy.yml@main
+    with:
+      project_name: TAE.UploadService
+      project_path: TAE.UploadService
+      publish_branch: main
