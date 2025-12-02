@@ -20,11 +20,3 @@
 - Docker (for local and server deployment)  
 
 ---
-
-## License
-
-All Rights Reserved. © 2025 Ian Ter Haar
-
-No part of this code may be copied, modified, or distributed without permission.
-
----
