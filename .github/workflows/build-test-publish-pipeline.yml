@@ -18,3 +18,6 @@ jobs:
       project_name: TAE.UploadService
       project_path: TAE.UploadService
       publish_branch: main
+    permissions:
+      contents: read
+      packages: write
