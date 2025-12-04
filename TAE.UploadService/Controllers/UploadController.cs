@@ -61,8 +61,7 @@ namespace TAE.UploadService.Controllers
         {
             try
             {
-                // logic
-                return "";
+                return "Online";
             }
             catch (Exception ex)
             {
