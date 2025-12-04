@@ -9,3 +9,7 @@ jobs:
     uses: ITH-Labs/.github/.github/workflows/dotnet-format.yml@main
     with:
       project_path: "./"
+    permissions:
+      contents: read
+      packages: write
+    

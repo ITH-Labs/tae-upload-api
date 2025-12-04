@@ -15,10 +15,11 @@ internal class Program
 
         builder.Services.AddScoped<UploadRepository>();
 
+        bool swaggerEnabled = builder.Configuration.GetValue<bool>("SwaggerEnabled");
+
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (app.Environment.IsDevelopment() || swaggerEnabled)
         {
             app.UseSwagger();
             app.UseSwaggerUI();
