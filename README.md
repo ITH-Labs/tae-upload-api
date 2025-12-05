@@ -4,6 +4,12 @@
 
 ---
 
+## Wiki
+
+Visit the wiki [home page](https://github.com/ITH-Labs/tae-upload-api/wiki) for detailed documentation on this project
+
+---
+
 ## Features
 
 - Upload Excel, CSV, or PDF transaction files  
