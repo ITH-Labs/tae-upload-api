@@ -1,3 +1,5 @@
+using Serilog;
+using TAE.UploadService.Infrastructure;
 using TAE.UploadService.Repositories;
 
 internal class Program
@@ -6,13 +8,14 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        Logger.Configure(builder.Configuration);
+        builder.Host.UseSerilog();
+
+        builder.Services.AddSingleton<Serilog.ILogger>(Log.Logger);
 
         builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
         builder.Services.AddScoped<UploadRepository>();
 
         bool swaggerEnabled = builder.Configuration.GetValue<bool>("SwaggerEnabled");
@@ -26,11 +29,8 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
-
         app.MapControllers();
-
         app.Run();
     }
 }

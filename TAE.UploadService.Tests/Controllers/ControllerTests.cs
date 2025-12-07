@@ -1,18 +1,17 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 using TAE.UploadService.Controllers;
-using Xunit;
 
 namespace TAE.UploadService.Tests.Controllers
 {
     public class ControllerTests(WebApplicationFactory<UploadController> webApplicationFactory) : IClassFixture<WebApplicationFactory<UploadController>>
     {
         private readonly WebApplicationFactory<UploadController> _webApplicationFactory = webApplicationFactory;
-
+       
         #region Upload Endpoint Tests
         [Fact]
         public void Upload_Method_Exists()
@@ -60,7 +59,7 @@ namespace TAE.UploadService.Tests.Controllers
 
             response.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        }
+        }        
         #endregion
 
         #region Health Endpoint Tests
