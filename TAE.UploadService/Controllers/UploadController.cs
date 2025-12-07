@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using TAE.UploadService.Repositories;
 
 namespace TAE.UploadService.Controllers
 {
     [ApiController]
     [Route("api/v1/fileupload")]
-    public class UploadController : ControllerBase
+    public class UploadController(UploadRepository uploadRepository) : ControllerBase
     {
-        private readonly UploadRepository _uploadRepository;
-
-        public UploadController(UploadRepository uploadRepository)
-        {
-            _uploadRepository = uploadRepository;
-        }
+        private readonly UploadRepository _uploadRepository = uploadRepository;
 
         [HttpPost]
         [Route("upload")]
@@ -26,7 +20,7 @@ namespace TAE.UploadService.Controllers
             try
             {
                 var result = await _uploadRepository.UploadFileAsync(file);
-                return result;
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -44,7 +38,7 @@ namespace TAE.UploadService.Controllers
             try
             {
                 // logic
-                return "";
+                return Ok();                
             }
             catch (Exception ex)
             {
@@ -54,15 +48,13 @@ namespace TAE.UploadService.Controllers
 
         [HttpGet]
         [Route("health")]
-        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<string>> Health()
+        public IActionResult Health()
         {
             try
             {
-                // logic
-                return "";
+                return Ok(new { status = "ok" });
             }
             catch (Exception ex)
             {

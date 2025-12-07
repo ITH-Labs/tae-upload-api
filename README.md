@@ -24,11 +24,3 @@ Visit the wiki [home page](https://github.com/ITH-Labs/tae-upload-api/wiki) for 
 - ASP.NET Core Web API  
 
 ---
-
-
-
-
-
-
-
-
