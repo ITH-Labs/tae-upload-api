@@ -1,11 +1,10 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 using TAE.UploadService.Controllers;
-using Xunit;
 
 namespace TAE.UploadService.Tests.Controllers
 {
