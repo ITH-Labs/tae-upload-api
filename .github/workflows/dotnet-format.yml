@@ -1,4 +1,4 @@
-name: Format Check
+name: Dotnet Format Check
 
 on:
   push:
