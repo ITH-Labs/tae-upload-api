@@ -13,6 +13,9 @@ internal class Program
 
         builder.Services.AddSingleton<Serilog.ILogger>(Log.Logger);
 
+        builder.Services.Configure<UploadStorageOptions>(
+        builder.Configuration.GetSection("UploadStorage"));
+
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
