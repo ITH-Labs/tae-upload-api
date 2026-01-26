@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using TAE.UploadService.Infrastructure;
 using TAE.UploadService.Repositories;
@@ -5,7 +6,7 @@ using TAE.UploadService.Repositories;
 namespace TAE.UploadService.Controllers
 {
     [ApiController]
-    [Route("api/v1/fileupload")]
+    [Route("api/v{version:apiVersion}/fileupload")]
     public class UploadController(UploadRepository uploadRepository, Serilog.ILogger logger) : ControllerBase
     {
         private readonly UploadRepository _uploadRepository = uploadRepository;
@@ -15,15 +16,15 @@ namespace TAE.UploadService.Controllers
         [Consumes("multipart/form-data")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status413PayloadTooLarge)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status415UnsupportedMediaType)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> Upload(IFormFile file)
         {
             if (file == null || file.Length == 0)
                 return BadRequest("No file provided.");
 
-            const long maxSizeBytes = 10 * 1024 * 1024; // 10MB
+            const long maxSizeBytes = 10 * 1024 * 1024; // ~10MB
             if (file.Length > maxSizeBytes)
             {
                 log.LogApiWarning("File size exceeds limit", nameof(Upload), new { fileSize = file.Length });
@@ -61,7 +62,7 @@ namespace TAE.UploadService.Controllers
                 log.LogApiError(ex, nameof(Upload));
                 return Problem(
                     detail: "Unexpected error while processing upload.",
-                    statusCode: StatusCodes.Status500InternalServerError
+                    statusCode: StatusCodes.Status500InternalServerError                    
                 );
             }
         }

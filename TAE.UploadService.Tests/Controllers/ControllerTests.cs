@@ -20,7 +20,7 @@ namespace TAE.UploadService.Tests.Controllers
             var methodInfo = controllerType.GetMethod("Upload");
 
             Assert.NotNull(methodInfo);
-            Assert.Equal(typeof(Task<ActionResult<string>>), methodInfo.ReturnType);
+            Assert.Equal(typeof(Task<ActionResult<Guid>>), methodInfo.ReturnType);
         }
 
         [Fact]
@@ -29,9 +29,11 @@ namespace TAE.UploadService.Tests.Controllers
             var client = _webApplicationFactory.CreateClient();
 
             using var content = new MultipartFormDataContent();
-            var fileContent = new ByteArrayContent([1, 2, 3]);
-            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
-            content.Add(fileContent, "file", "test.txt");
+            var filePath = Path.Combine(AppContext.BaseDirectory, "TestData", "TestExcelFile.xlsx");
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+            var fileContent = new ByteArrayContent(fileBytes);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            content.Add(fileContent, "file", "TestExcelFile.xlsx");
 
             var response = await client.PostAsync("/api/v1/fileupload/upload", content);
 

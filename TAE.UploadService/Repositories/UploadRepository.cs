@@ -15,8 +15,8 @@ namespace TAE.UploadService.Repositories
 
         public UploadRepository(IConfiguration config, IOptions<UploadStorageOptions> options)
         {
-            _connectionString = config.GetConnectionString("UploadDb")
-                ?? throw new InvalidOperationException("UploadDb connection string not found");
+            _connectionString = config.GetConnectionString("TAE_Engine")
+                ?? throw new InvalidOperationException("TAE_Engine connection string not found");
 
             var uploadConfig = options.Value;
             _tempDir = uploadConfig.TempDirectory;
@@ -40,12 +40,16 @@ namespace TAE.UploadService.Repositories
                 await using (var source = file.OpenReadStream())
                 await using (var target = File.Create(tempPath))
                 using (var sha256 = SHA256.Create())
-                await using (var crypto = new CryptoStream(target, sha256, CryptoStreamMode.Write))
                 {
-                    await source.CopyToAsync(crypto);
-                    await crypto.FlushAsync();
+                    await using (var crypto = new CryptoStream(target, sha256, CryptoStreamMode.Write))
+                    {
+                        await source.CopyToAsync(crypto);
+                        crypto.FlushFinalBlock();
+                    }
+
                     hash = Convert.ToHexString(sha256.Hash!);
                 }
+
 
                 ValidateExcelStructure(tempPath);
 
@@ -123,7 +127,7 @@ namespace TAE.UploadService.Repositories
         public async Task<UploadEntity> StoreMetadataAsync(UploadEntity entity)
         {
             const string sql = @"
-        INSERT INTO Uploads (UploadId, OriginalFileName, FileHash, FileSize, StoragePath, Status, UploadedAt)
+        INSERT INTO Uploads (Upload_Id, OriginalFileName, FileHash, FileSize, StoragePath, Status, UploadedAt)
         VALUES (@UploadId, @OriginalFileName, @FileHash, @FileSize, @StoragePath, @Status, @UploadedAt)";
 
             using var connection = new SqlConnection(_connectionString);

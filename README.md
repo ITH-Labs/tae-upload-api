@@ -12,7 +12,7 @@ Visit the wiki [home page](https://github.com/ITH-Labs/tae-upload-api/wiki) for 
 
 ## Features
 
-- Upload Excel, CSV, or PDF transaction files  
+- Upload Excel or CSV transaction files  
 - Store file metadata in SQL Server  
 - Trigger TAE Core Engine for processing  
 - Health check endpoint  
