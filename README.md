@@ -9,18 +9,3 @@
 Visit the wiki [home page](https://github.com/ITH-Labs/tae-upload-api/wiki) for detailed documentation on this project
 
 ---
-
-## Features
-
-- Upload Excel or CSV transaction files  
-- Store file metadata in SQL Server  
-- Trigger TAE Core Engine for processing  
-- Health check endpoint  
-
----
-
-## Tech Stack
-
-- ASP.NET Core Web API  
-
----
