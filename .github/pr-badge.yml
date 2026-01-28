@@ -11,6 +11,11 @@
   message: "Medium"
   color: "yellow"
   when: "$additions > 200 && $additions < 500"
+
+- label: "PR Size"
+  message: "Small"
+  color: "green"
+  when: "$additions <= 200"
   
 - label: '#$prNumber'
   message: '$payload.pull_request.user.login /$payload.pull_request.head.ref → $payload.repository.full_name'
